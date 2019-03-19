@@ -9,6 +9,7 @@
   </head>
   <body>
     <div class="container">
+      <%= if get_flash(@conn, :info) || get_flash(@conn, :error) do %>
       <div class="row">
         <div class="col-12">
           <%= if get_flash(@conn, :info) do %>
@@ -21,23 +22,10 @@
           <% end %>
         </div>
       </div>
-      <div class="col-4">
-        <%= if @current_user do %>
-          <p class="my-3">
-            User: <%= @current_user.email %> |
-            <%= link("Logout", to: Routes.session_path(@conn, :delete),
-              method: :delete) %>
-          </p>
-        <% else %>
-          <%= form_for @conn, Routes.session_path(@conn, :create),
-                  [class: "form-inline"], fn f -> %>
-            <%= text_input f, :email, class: "form-control" %>
-            <%= submit "Login", class: "btn btn-secondary" %>
-          <% end %>
-        <% end %>
-      </div>
+      <% end %>
 
       <%= render @view_module, @view_template, assigns %>
+    </div>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

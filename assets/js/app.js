@@ -27,5 +27,5 @@ import root_init from "./root";
 $(() => {
   let node = $('#root')[0];
   //root_init(node, store);
-  root_it(node);
+  root_init(node);
 });

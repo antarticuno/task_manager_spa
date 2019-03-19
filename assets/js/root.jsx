@@ -12,9 +12,7 @@ import TaskList from './task_list';
 
 export default function root_init(node) {
   ReactDOM.render(
-    <Provider>
-      <Root tasks={window.tasks} />
-    </Provider>, node);
+      <Root tasks={window.tasks} />, node);
 }
 
 class Root extends React.Component {
