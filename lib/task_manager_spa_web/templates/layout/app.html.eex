@@ -8,23 +8,36 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-          </ul>
-        </nav>
-        <a href="http://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
-    </header>
-    <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <%= if get_flash(@conn, :info) do %>
+            <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+          <% end %>
+          <%= if get_flash(@conn, :error) do %>
+            <p class="alert alert-danger" role="alert">
+              <%= get_flash(@conn, :error) %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-4">
+        <%= if @current_user do %>
+          <p class="my-3">
+            User: <%= @current_user.email %> |
+            <%= link("Logout", to: Routes.session_path(@conn, :delete),
+              method: :delete) %>
+          </p>
+        <% else %>
+          <%= form_for @conn, Routes.session_path(@conn, :create),
+                  [class: "form-inline"], fn f -> %>
+            <%= text_input f, :email, class: "form-control" %>
+            <%= submit "Login", class: "btn btn-secondary" %>
+          <% end %>
+        <% end %>
+      </div>
+
       <%= render @view_module, @view_template, assigns %>
-    </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
