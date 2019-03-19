@@ -1,4 +1,4 @@
-import { createManager, combineReducers } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import deepFreeze from 'deep-freeze';
 
 /*
@@ -74,7 +74,7 @@ function root_reducer(state0, action) {
   return deepFreeze(state1);
 }
 
-let manager = createManager(root_reducer);
+let manager = createStore(root_reducer);
 export default manager;
 
 
