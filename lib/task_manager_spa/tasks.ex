@@ -18,7 +18,8 @@ defmodule TaskManagerSpa.Tasks do
 
   """
   def list_tasks do
-    Repo.all(Task)
+    Repo.all from t  in Task,
+      preload: [assigns: :user]
   end
 
   @doc """
@@ -35,7 +36,7 @@ defmodule TaskManagerSpa.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id), do: Repo.one from t in Task, where: t.id == ^id, preload: [assigns: :user]
 
   @doc """
   Creates a task.
@@ -50,9 +51,9 @@ defmodule TaskManagerSpa.Tasks do
 
   """
   def create_task(attrs \\ %{}) do
-    %Task{}
+    %Task{assigns: []}
     |> Task.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(preload: [:assigns])
   end
 
   @doc """

@@ -18,7 +18,7 @@ defmodule TaskManagerSpa.Assigns do
 
   """
   def list_assigns do
-    Repo.all(Assign)
+    Repo.all(from a in Assign, preload: [:task, :user])
   end
 
   @doc """
@@ -35,7 +35,11 @@ defmodule TaskManagerSpa.Assigns do
       ** (Ecto.NoResultsError)
 
   """
-  def get_assign!(id), do: Repo.get!(Assign, id)
+  def get_assign!(id) do 
+    Repo.one(from a in Assign,
+      where: a.id == ^id,
+      preload: [:task, :user])
+  end
 
   @doc """
   Creates a assign.
@@ -52,7 +56,7 @@ defmodule TaskManagerSpa.Assigns do
   def create_assign(attrs \\ %{}) do
     %Assign{}
     |> Assign.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(on_conflict: :replace_all, conflict_target: [:user_id, :task_id])
   end
 
   @doc """

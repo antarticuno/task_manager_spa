@@ -15,7 +15,7 @@ defmodule TaskManagerSpa.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password_hash, :admin])
-    |> validate_required([:email, :password_hash, :admin])
+    |> cast(attrs, [:email, :password_hash, :name])
+    |> validate_required([:email, :password_hash, :name])
   end
 end

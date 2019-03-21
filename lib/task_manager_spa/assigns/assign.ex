@@ -12,8 +12,14 @@ defmodule TaskManagerSpa.Assigns.Assign do
 
   @doc false
   def changeset(assign, attrs) do
-    assign
-    |> cast(attrs, [:time_spent])
-    |> validate_required([:time_spent])
+    ts = Map.fetch!(attrs, "time_spent") || 0
+    assign = Map.put(assign, "time_spent", ts)
+    if (rem(ts, 15) == 0 && ts >= 0) do
+      assign
+      |> cast(attrs, [:time_spent, :user_id, :task_id])
+      |> validate_required([:time_spent, :user_id, :task_id])
+    else
+      {:error, "Invalid unit of time."}
+    end
   end
 end

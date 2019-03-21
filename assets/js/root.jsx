@@ -6,63 +6,61 @@ import _ from 'lodash';
 import $ from 'jquery';
 
 import api from './api';
-//import UserList from './user_list';
+import Header from './header';
+import UserList from './user_list';
 import TaskList from './task_list';
-//import Cart from './cart';
+import TaskForm from './task_form';
+import AssignList from './assign_list';
 
-export default function root_init(node) {
+export default function root_init(node, store) {
+  let tasks = window.tasks;
   ReactDOM.render(
-      <Root tasks={window.tasks} />, node);
+      <Provider store={store}>
+        <Root tasks={tasks} />
+      </Provider>, node);
 }
 
 class Root extends React.Component {
   constructor(props) {
     super(props);
-
-    api.create_session("bob@example.com", "pass1");
-    //api.fetch_products();
-    //api.fetch_users();
-    //api.fetch_cart();
   }
 
-  render() {
+  render() {/*
+    if (store.session == null) {
+      return <div>
+	<Router>
+	  <div>
+	    <Header />
+	    <div className="row">
+	      <Route path="/users/new" exact={true} render={() =>
+		<NewUserForm />} />
+	    </div>
+	  </div>
+	</Router>
+      </div>;
+    }*/
     return <div>
       <Router>
         <div>
           <Header />
-          <div className="row">
+          <div className="row" id="content">
             <div className="col-8">
               <Route path="/" exact={true} render={() =>
-                <ProductList />
+                <TaskList />
               } />
               <Route path="/users" exact={true} render={() =>
                 <UserList />
               } />
+	      <Route path="/assigns" exact={true} render={() =>
+	        <AssignList />
+	      } />
             </div>
             <div className="col-4">
-              <Cart />
+              <TaskForm />
             </div>
           </div>
         </div>
       </Router>
     </div>;
   }
-}
-
-function Header(props) {
-  return <div className="row my-2">
-    <div className="col-4">
-      <h1><Link to={"/"} onClick={() => api.fetch_tasks()}>Task Manager</Link></h1>
-    </div>
-    <div className="col-2">
-      <p><Link to={"/users"} onClick={() => api.fetch_users()}>Users</Link></p>
-    </div>
-    <div className="col-6">
-      <div className="form-inline my-2">
-        <input type="email" placeholder="email" />
-        <input type="password" placeholder="password" />
-        <button className="btn btn-secondary">Login</button>
-      </div>
-    </div>
-  </div>;
 }

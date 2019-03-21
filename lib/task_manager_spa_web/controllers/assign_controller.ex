@@ -13,6 +13,7 @@ defmodule TaskManagerSpaWeb.AssignController do
 
   def create(conn, %{"assign" => assign_params}) do
     with {:ok, %Assign{} = assign} <- Assigns.create_assign(assign_params) do
+      assign = TaskManagerSpa.Repo.preload(assign, [:user, :task])
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.assign_path(conn, :show, assign))

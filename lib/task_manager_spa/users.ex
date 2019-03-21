@@ -52,6 +52,19 @@ defmodule TaskManagerSpa.Users do
   end
 
   @doc """
+  Gets a user by email and verifies that the password matches the encrypted version
+  
+  """
+
+  def get_and_auth_user(email, password) do
+    user = get_user_by_email(email)
+    case Argon2.check_pass(user, password) do
+      {:ok, user} -> user
+      _else       -> nil
+    end
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples

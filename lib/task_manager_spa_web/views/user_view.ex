@@ -13,7 +13,6 @@ defmodule TaskManagerSpaWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       email: user.email,
-      password_hash: user.password_hash,
-      admin: user.admin}
+      name: user.name}
   end
 end
