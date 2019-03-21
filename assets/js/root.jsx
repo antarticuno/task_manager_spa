@@ -24,7 +24,7 @@ class Root extends React.Component {
   constructor(props) {
     super(props);
 
-    api.fetch_all();
+    api.fetch_all('GET_SESSION', null);
   }
 
   render() {

@@ -9,16 +9,17 @@ class TheServer {
       contentType: "application/json; charset=UTF-8",
       data: "",
       success: callback,
+      error: (resp) => alert("Couldn't get the specified resource."),
     });
   }
 
-  fetch_all() {
+  fetch_all(type, data) {
     this.fetch_tasks();
     this.fetch_users();
     this.fetch_assigns();
     store.dispatch({
-      type: "GET_SESSION",
-      data: {}
+      type: type,
+      data: data
     });
   }
 
@@ -63,6 +64,7 @@ class TheServer {
       method: "delete",
       data: JSON.stringify(data),
       success: callback,
+      error: (resp) => alert("Couldn't delete.),
     });
   }
 
@@ -73,6 +75,7 @@ class TheServer {
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify(data),
       success: callback,
+      error: (resp) => alert("Bad post request."),
     });
   }
 
@@ -82,7 +85,8 @@ class TheServer {
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify({id: id, task: {title, description, completed}}),
-      success: (resp) => {this.fetch_tasks();}
+      success: (resp) => {this.fetch_tasks();},
+      error: (resp) => alert("Couldn't update the specified task.")
     });
   }
 
@@ -92,7 +96,8 @@ class TheServer {
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify({id: id, assign: {id, user_id, task_id, time_spent}}),
-      success: (resp) => {this.fetch_assigns();}
+      success: (resp) => {this.fetch_assigns();},
+      error: (resp) => alert("Couldn't update the specified assignment.")
     });
   }
 
@@ -101,12 +106,8 @@ class TheServer {
       "/api/v1/sessions",
       {email, password},
       (resp) => {
-        store.dispatch({
-          type: 'NEW_SESSION',
-          data: resp.data,
-        });
-	this.fetch_all();
-      }
+	this.fetch_all('NEW_SESSION', resp.data);
+      },
     );
   }
 

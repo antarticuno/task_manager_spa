@@ -67,7 +67,6 @@ function root_reducer(state0, action) {
   let reducer = combineReducers({tasks, users, assigns, session});
   let state1 = reducer(state0, action);
 
-  console.log(state1);
   return deepFreeze(state1);
 }
 

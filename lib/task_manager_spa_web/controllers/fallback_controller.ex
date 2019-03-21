@@ -26,8 +26,8 @@ defmodule TaskManagerSpaWeb.FallbackController do
     |> send_resp(:unprocessable_entity, Jason.encode!(%{error: "auth-failed"}))
   end
 
-  def call(conn, nil) do
-    IO.puts("null call received")
-    call(conn, {:error, "invalid password"})
-  end
+  #def call(conn, nil) do
+  #  IO.puts("null call received")
+  #  call(conn, {:error, "invalid password"})
+  #end
 end

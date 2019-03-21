@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function Header(props) {
-  let session = window.session_token;
-  //let session = props.session;
+  let session = props.session;
   let session_info;
   if (session == null) {
     session_info =
@@ -36,7 +35,7 @@ function Header(props) {
       <Link to={"/users"} onClick={() => api.fetch_users()}>Users</Link>&nbsp;&nbsp;&nbsp;
       <Link to={"/assigns"} onClick={() => api.fetch_assigns()}>Assigns</Link>
     </div>
-    <div className="col-3">
+    <div className="col-3" id="session-info">
       {session_info}
     </div>
   </div>;
