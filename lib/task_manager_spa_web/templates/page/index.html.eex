@@ -8,4 +8,6 @@
 
 <script>
  window.tasks = <%= raw Jason.encode!(@tasks) %>;
+ window.session_token = <%= raw Jason.encode!((@session || %{data: nil}).data) %>;
+ console.log(session_token);
 </script>

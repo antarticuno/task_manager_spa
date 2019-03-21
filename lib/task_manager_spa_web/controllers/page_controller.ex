@@ -4,6 +4,6 @@ defmodule TaskManagerSpaWeb.PageController do
   def index(conn, _params) do
     tasks = TaskManagerSpa.Tasks.list_tasks()
     |> Enum.map(&(Map.take(&1, [:id, :title, :description])))
-    render(conn, "index.html", tasks: tasks)
+    render(conn, "index.html", tasks: tasks, session: get_session(conn, :session))
   end
 end

@@ -13,7 +13,7 @@ import TaskForm from './task_form';
 import AssignList from './assign_list';
 
 export default function root_init(node, store) {
-  let tasks = window.tasks;
+  let session = window.session_token;
   ReactDOM.render(
       <Provider store={store}>
         <Root tasks={tasks} />
@@ -23,22 +23,11 @@ export default function root_init(node, store) {
 class Root extends React.Component {
   constructor(props) {
     super(props);
+
+    api.fetch_all();
   }
 
-  render() {/*
-    if (store.session == null) {
-      return <div>
-	<Router>
-	  <div>
-	    <Header />
-	    <div className="row">
-	      <Route path="/users/new" exact={true} render={() =>
-		<NewUserForm />} />
-	    </div>
-	  </div>
-	</Router>
-      </div>;
-    }*/
+  render() {
     return <div>
       <Router>
         <div>

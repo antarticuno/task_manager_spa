@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function Header(props) {
-  let {session} = props;
+  let session = window.session_token;
+  //let session = props.session;
   let session_info;
   if (session == null) {
     session_info =

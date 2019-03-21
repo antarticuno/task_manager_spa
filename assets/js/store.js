@@ -53,7 +53,10 @@ function session(state = null, action) {
   switch (action.type) {
   case 'NEW_SESSION':
     return action.data;
+  case 'GET_SESSION':
+    return window.session_token;
   case 'DELETE_SESSION':
+    window.session_token = null;
     return null;
   default:
     return state;
@@ -64,6 +67,7 @@ function root_reducer(state0, action) {
   let reducer = combineReducers({tasks, users, assigns, session});
   let state1 = reducer(state0, action);
 
+  console.log(state1);
   return deepFreeze(state1);
 }
 

@@ -11,6 +11,8 @@ defmodule TaskManagerSpaWeb.Router do
   end
 
   pipeline :api do
+    plug :fetch_session
+    plug :fetch_flash
     plug :accepts, ["json"]
   end
 

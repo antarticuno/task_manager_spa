@@ -12,6 +12,16 @@ class TheServer {
     });
   }
 
+  fetch_all() {
+    this.fetch_tasks();
+    this.fetch_users();
+    this.fetch_assigns();
+    store.dispatch({
+      type: "GET_SESSION",
+      data: {}
+    });
+  }
+
   fetch_tasks() {
     this.fetch_path(
       "/api/v1/tasks",
@@ -95,18 +105,19 @@ class TheServer {
           type: 'NEW_SESSION',
           data: resp.data,
         });
-	this.fetch_tasks();
-	this.fetch_users();
-	this.fetch_assigns();
+	this.fetch_all();
       }
     );
   }
 
   delete_session() {
-    store.dispatch({
-      type: "DELETE_SESSION",
-      data: null,
-    });
+    this.send_delete(
+      "/api/v1/sessions/",
+      {},
+      (resp) => {
+	store.dispatch({type: "DELETE_SESSION", data: null,})
+      },
+    );
   }
 
   delete_assign(id) {

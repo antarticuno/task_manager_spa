@@ -14,14 +14,14 @@ defmodule TaskManagerSpaWeb.SessionController do
 
       conn
       |> put_resp_header("content-type", "application/json; charset=utf-8")
-      |> put_session(:user_id, resp)
+      |> put_session(:session, resp)
       |> send_resp(:created, Jason.encode!(resp))
     end
   end
 
   def delete(conn, _params) do
     conn
-    |> delete_session(:user_id)
-    |> send_resp(:deleted, Jason.encode!(%{data: "Logged out."}))
+    |> clear_session()
+    |> send_resp(:no_content, "")
   end
 end
