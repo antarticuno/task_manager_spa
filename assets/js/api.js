@@ -64,7 +64,7 @@ class TheServer {
       method: "delete",
       data: JSON.stringify(data),
       success: callback,
-      error: (resp) => alert("Couldn't delete.),
+      error: (resp) => alert("Couldn't delete."),
     });
   }
 
